@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
-import { CubeIcon, HomeIcon } from "@heroicons/react/20/solid";
+import { CubeIcon, HomeIcon, TruckIcon } from "@heroicons/react/20/solid";
 
 const links = [
   { name: "Dashboard", href: "/dashboard", icon: CubeIcon },
   { name: "Local", href: "/dashboard/location", icon: HomeIcon },
+  { name: "Movimentação", href: "/dashboard/record", icon: TruckIcon },
 ];
 
 export default function NavLinks() {
