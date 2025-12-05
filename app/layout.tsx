@@ -25,9 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${nunito.variable} ${ubuntuMono.variable} antialiased px-5`}
-      >
+      <body className={`${nunito.variable} ${ubuntuMono.variable} antialiased`}>
         {children}
       </body>
     </html>
