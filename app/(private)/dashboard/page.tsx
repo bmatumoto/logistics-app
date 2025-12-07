@@ -3,6 +3,8 @@ import { getRegisters } from "@/lib/actions";
 import { DeleteRegister } from "@/components/ui/DeleteRegister";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 
+export const dynamic = "force-dynamic";
+
 export default async function Page() {
   const registers = await getRegisters();
 
