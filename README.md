@@ -1,36 +1,126 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📦 Logistics App
 
-## Getting Started
+Projeto inicial e experimental que demonstra, de forma prática, o funcionamento de um sistema de gerenciamento logístico para controle das movimentações de entrada (Inbound) e saída (Outbound) de produtos.
 
-First, run the development server:
+## 🚀 Tecnologias
 
+- **Next.js 16** - Framework React
+- **TypeScript** - Tipagem estática
+- **Tailwind CSS** - Estilização
+- **Drizzle ORM** - ORM para PostgreSQL
+- **Neon Database** - PostgreSQL serverless
+- **NextAuth.js** - Autenticação
+- **React Hook Form + Zod** - Validação de formulários
+
+## 📋 Funcionalidades
+
+### Autenticação
+- Login com [NextAuth.js](https://authjs.dev/reference/nextjs)
+- Proteção de rotas privadas
+
+### Dashboard
+- Visualização de todas as movimentações registradas
+- Listagem com informações de origem, destino e data
+- Edição e exclusão de registros
+
+### Registro de Movimentações
+- Cadastro de operações Inbound (entrada) e Outbound (saída)
+- Seleção de local de origem e destino
+- Registro de múltiplos produtos por movimentação
+- Validação de dados com Zod
+
+## 🛠️ Como Clonar e Executar
+
+### Pré-requisitos
+- Node.js 18+ instalado
+- npm, yarn, pnpm ou bun
+
+### Passo a Passo
+
+1. **Clone o repositório**
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <url-do-repositorio>
+cd logistics-app
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Instale as dependências**
+```bash
+npm install
+# ou
+yarn install
+# ou
+pnpm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. **Configure as variáveis de ambiente**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Crie um arquivo `.env` na raiz do projeto:
+```env
+DATABASE_URL=<sua-connection-string-postgresql>
+AUTH_SECRET=<sua-chave-secreta>
+AUTH_URL=http://localhost:3000/api/auth
+```
 
-## Learn More
+4. **Execute as migrações do banco de dados**
 
-To learn more about Next.js, take a look at the following resources:
+Domentação do [Drizzle](https://orm.drizzle.team/docs/get-started/neon-new)
+```bash
+npx drizzle-kit push
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+5. **Inicie o servidor de desenvolvimento**
+```bash
+npm run dev
+# ou
+yarn dev
+# ou
+pnpm dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+6. **Acesse a aplicação**
 
-## Deploy on Vercel
+Abra [http://localhost:3000](http://localhost:3000) no navegador.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📁 Estrutura do Projeto
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+logistics-app/
+├── app/                   # Rotas e páginas Next.js
+│   ├── (private)/         # Rotas protegidas
+│   │   └── dashboard/     # Dashboard principal
+│   └── login/             # Página de login
+├── components/            # Componentes React
+│   ├── auth/              # Componentes de autenticação
+│   ├── layout/            # Formulários e layouts
+│   └── ui/                # Componentes de interface
+├── db/                    # Configuração do banco de dados
+│   └── schema/            # Schemas Drizzle
+├── lib/                   # Funções utilitárias
+│   ├── actions.ts         # Server actions
+│   └── authenticate.ts    # Lógica de autenticação
+└── migrations/            # Migrações do banco de dados
+```
+
+## 🔐 Autenticação
+
+O sistema utiliza NextAuth.js para autenticação. Para fazer login, você precisa ter um usuário cadastrado no banco de dados.
+
+## 📝 Scripts Disponíveis
+
+- `npm run dev` - Inicia o servidor de desenvolvimento
+- `npm run build` - Cria build de produção
+- `npm run start` - Inicia servidor de produção
+- `npm run lint` - Executa o linter
+
+## 🗄️ Banco de Dados
+
+O projeto utiliza PostgreSQL com Drizzle ORM. As principais tabelas são:
+
+- **users** - Usuários do sistema
+- **registers** - Registros de movimentações
+- **register_products** - Produtos vinculados às movimentações
+- **products** - Catálogo de produtos
+
+## 📄 Licença
+
+Este projeto é privado.
