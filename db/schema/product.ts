@@ -17,7 +17,6 @@ export const insertProductSchema = createInsertSchema(products, {
   id: true,
   created_at: true,
   updated_at: true,
-  register_id: true
 });
 
 export const selectProductSchema = createSelectSchema(products);

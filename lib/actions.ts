@@ -3,7 +3,16 @@
 import { revalidatePath } from "next/cache";
 import { desc, eq } from 'drizzle-orm';
 import { db } from "@/db/drizzle";
-import { users, registers, registerProducts, insertCombinedRegisterSchema, InsertCombinedRegisterInput, SelectCombinedRegisterInput } from "@/db/schema/index";
+import { 
+  users,
+  registers,
+  registerProducts,
+  insertCombinedRegisterSchema,
+  InsertCombinedRegisterInput,
+  SelectCombinedRegisterInput,
+  InsertProductInput,
+  products
+} from "@/db/schema/index";
 import { z } from "zod";
 
 export const findUser = async (email: string) => {
@@ -126,3 +135,35 @@ export const deleteRegister = async (id: string) => {
     };
   }
 };
+
+export const getProducts = async () => {
+  const rows = await db.select({
+    id: products.id,
+    title: products.title,
+    sku: products.sku,
+    created_at: products.created_at
+  }).from(products).limit(10);
+
+  return rows;
+}
+
+export const createProduct = async (product: InsertProductInput) => {
+  const hasProduct = await db.query.products.findFirst({
+    where: eq(products.sku, product.sku),
+  });
+
+  if (hasProduct) {
+    return {
+      success: false,
+      type: "DUPLICATE" as const,
+      error: "Produto já cadastrado",
+    };
+  }
+
+  const [created] = await db.insert(products).values(product).returning();
+
+  return {
+    created,
+    success: true
+  };
+}
