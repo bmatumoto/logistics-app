@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { desc, eq } from 'drizzle-orm';
+import { desc, eq, inArray } from 'drizzle-orm';
 import { db } from "@/db/drizzle";
 import { 
   users,
@@ -50,22 +50,42 @@ export const getRegisters = async () => {
 
 export const createRegister = async (formData: InsertCombinedRegisterInput) => {
   try {
-    const parsed = insertCombinedRegisterSchema.safeParse(formData);
+    const items = formData.itens;
+    const productIds = items.map((item) => item.product_id);
 
-    if (parsed.data) {
-      const [register] = await db.insert(registers).values(parsed.data).returning();
+    const existingProducts = await db.select({ id: products.id })
+      .from(products)
+      .where(inArray(products.id, productIds));
 
-      await db.insert(registerProducts).values(parsed.data.itens.map((item) => ({
-        register_id: register.id,
-        product_id: item.product_id,
-        quantity: item.quantity,
-      })));
+    const existingIds = new Set(existingProducts.map((p) => p.id));
 
+    const invalidItems = items.filter(
+      (item) => !existingIds.has(item.product_id)
+    );
+
+    if (invalidItems.length > 0) {
       return {
-        success: true,
-        id: register.id
+        success: false,
+        type: "NOT_LISTED" as const,
+        error: "Sku(s) sem cadastro no banco de dados",
+        invalidProductIds: invalidItems.map(
+          (item) => item.product_id
+        ),
       };
     }
+
+    const [register] = await db.insert(registers).values(formData).returning();
+
+    await db.insert(registerProducts).values(formData.itens.map((item) => ({
+      register_id: register.id,
+      product_id: item.product_id,
+      quantity: item.quantity,
+    })));
+
+    return {
+      success: true,
+      id: register.id
+    };
   } catch (error) {
     if (error instanceof z.ZodError) {
       return {

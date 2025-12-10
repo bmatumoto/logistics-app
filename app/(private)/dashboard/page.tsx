@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getRegisters } from "@/lib/actions";
 import { DeleteRegister } from "@/components/ui/DeleteRegister";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
+import clsx from "clsx";
 
 export const dynamic = "force-dynamic";
 
@@ -24,6 +25,9 @@ export default async function Page() {
             <tr>
               <th scope="col" className="px-6 py-3 font-medium rounded-tl-lg">
                 ID
+              </th>
+              <th scope="col" className="px-6 py-3 font-medium">
+                Operação
               </th>
               <th scope="col" className="px-6 py-3 font-medium">
                 Pedido
@@ -52,6 +56,13 @@ export default async function Page() {
                   className="border-b border-stone-900 last:border-none"
                 >
                   <td className="px-6 py-4">{register.id}</td>
+                  <td
+                    className={clsx("px-6 py-4 font-semibold text-lime-300", {
+                      "text-rose-300": register.type_operation === "outbound",
+                    })}
+                  >
+                    {register.type_operation}
+                  </td>
                   <td className="px-6 py-4">{register.order_code}</td>
                   <td className="px-6 py-4">{register.origin_location}</td>
                   <td className="px-6 py-4">{register.delivery_location}</td>
@@ -71,7 +82,7 @@ export default async function Page() {
                       <PencilSquareIcon className="w-4" />
                       <Link
                         href={`/dashboard/record/${register.id}`}
-                        className="flex gap-2 items-center"
+                        className="flex gap-2 items-center cursor-pointer transition delay-[1s] duration-300 ease-in-out hover:bg-transparent hover:underline hover:text-inherit"
                       >
                         Editar
                       </Link>

@@ -10,6 +10,7 @@ import {
 } from "@/db/schema/index";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast, Toaster } from "sonner";
 import {
   CubeIcon,
   TruckIcon,
@@ -77,8 +78,10 @@ export default function FormUpdateRecord({
     const response = await updateRegister(data.id, formData as FormOutput);
 
     if (response?.success) {
-      alert("Movimentação atualizada com sucesso!");
-      redirect("/dashboard");
+      toast.success("Movimentação atualizada com sucesso!");
+      setTimeout(() => {
+        redirect("/dashboard");
+      }, 1000);
     }
   };
 
@@ -95,6 +98,7 @@ export default function FormUpdateRecord({
 
   return (
     <div className="mt-8">
+      <Toaster position="top-right" />
       <div className="bg-[#f2f2f2] rounded-lg border border-stone-200 p-6">
         {/* Tipo de Operação */}
         <div>

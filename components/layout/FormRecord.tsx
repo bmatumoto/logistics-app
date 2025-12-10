@@ -5,6 +5,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { insertCombinedRegisterSchema } from "@/db/schema/index";
 import { createRegister } from "@/lib/actions";
+import { toast, Toaster } from "sonner";
 import {
   CubeIcon,
   TruckIcon,
@@ -49,10 +50,18 @@ export default function FormRecord() {
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
     const response = await createRegister(data as FormOutput);
 
-    if (response?.success) {
-      alert("Movimentação registrada com sucesso!");
-      reset();
+    if (!response.success) {
+      if (response.type === "NOT_LISTED") {
+        const listSku = response.invalidProductIds.join(", ");
+
+        return toast.error(`sku(s) sem cadastro no banco de dados: ${listSku}`);
+      }
+
+      return toast.error("Ops, algo deu errado");
     }
+
+    toast.success("Movimentação registrada com sucesso!");
+    reset();
   };
 
   const addItem = () => {
@@ -68,6 +77,7 @@ export default function FormRecord() {
 
   return (
     <div className="space-y-6">
+      <Toaster position="top-right" />
       <div className="bg-[#f2f2f2] rounded-lg border border-stone-200 p-6">
         {/* Tipo de Operação */}
         <div>
@@ -251,16 +261,15 @@ export default function FormRecord() {
             ))}
           </div>
         </div>
-      </div>
-
-      {/* Botão Submit */}
-      <div className="flex gap-4">
-        <button
-          onClick={handleSubmit(onSubmit)}
-          className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors font-medium cursor-pointer"
-        >
-          Registrar Movimentação
-        </button>
+        {/* Botão Submit */}
+        <div className="flex gap-4 mt-8">
+          <button
+            onClick={handleSubmit(onSubmit)}
+            className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors font-medium cursor-pointer"
+          >
+            Registrar Movimentação
+          </button>
+        </div>
       </div>
     </div>
   );
