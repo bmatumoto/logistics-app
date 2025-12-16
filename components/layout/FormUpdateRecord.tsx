@@ -99,13 +99,13 @@ export default function FormUpdateRecord({
   return (
     <div className="mt-8">
       <Toaster position="top-right" />
-      <div className="bg-[#f2f2f2] rounded-lg border border-stone-200 p-6">
+      <div className="bg-(--color-accent-foreground) rounded-lg border border-(--color-border) p-6">
         {/* Tipo de Operação */}
         <div>
-          <h3 className="text-lg font-bold mb-4 text-stone-700">
+          <h3 className="text-lg font-bold mb-4 text-(--primary-foreground)">
             Tipo de Operação
           </h3>
-          <div className="flex gap-4 text-stone-600">
+          <div className="flex gap-4 text-stone-400">
             <label className="flex items-center gap-2 cursor-pointer">
               <input
                 type="radio"
@@ -136,17 +136,17 @@ export default function FormUpdateRecord({
 
         {/* Dados da Movimentação */}
         <div className="my-8">
-          <h3 className="text-lg font-bold mb-4 text-stone-700">
+          <h3 className="text-lg font-bold mb-4 text-(--primary-foreground)">
             Dados da Movimentação
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="text-stone-600">
-              <label className="block text-sm font-medium text-stone-700 mb-1">
+            <div className="text-stone-400">
+              <label className="block text-sm font-medium mb-1">
                 Local Origem *
               </label>
               <select
                 {...register("origin_location")}
-                className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-(--color-border) rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="">Selecione...</option>
                 {locais.map((local) => (
@@ -161,13 +161,13 @@ export default function FormUpdateRecord({
                 </p>
               )}
             </div>
-            <div className="text-stone-600">
-              <label className="block text-sm font-medium text-stone-700 mb-1">
+            <div className="text-stone-400">
+              <label className="block text-sm font-medium mb-1">
                 Local Destino *
               </label>
               <select
                 {...register("delivery_location")}
-                className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-(--color-border) rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="">Selecione...</option>
                 {locais.map((local) => (
@@ -182,15 +182,15 @@ export default function FormUpdateRecord({
                 </p>
               )}
             </div>
-            <div className="md:col-span-2 text-stone-600">
-              <label className="block text-sm font-medium text-stone-700 mb-1">
+            <div className="md:col-span-2 text-stone-400">
+              <label className="block text-sm font-medium mb-1">
                 Número da Nota Fiscal (NF, Pedido, etc.)
               </label>
               <input
                 type="text"
                 {...register("order_code")}
                 placeholder="NF-12345"
-                className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-(--color-border) rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               {errors.order_code && (
                 <p className="text-red-600 text-sm mt-1">
@@ -204,7 +204,9 @@ export default function FormUpdateRecord({
         {/* Itens da Movimentação */}
         <div className="mt-10">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-bold text-stone-700">Itens da Carga</h3>
+            <h3 className="text-lg font-bold text-(--primary-foreground)">
+              Itens da Carga
+            </h3>
             <button
               type="button"
               onClick={addItem}
@@ -219,13 +221,13 @@ export default function FormUpdateRecord({
           )}
 
           <div className="space-y-4">
-            <div className="p-4 border border-yellow-400 rounded-lg">
-              <p className="text-sm font-semibold text-stone-900">
+            <div className="p-4 border border-(--color-border) rounded-lg">
+              <p className="text-sm font-semibold text-(--custom-yellow)">
                 ID de Produtos para usar de exemplo
               </p>
               <div className="flex flex-wrap gap-4 w-full">
                 {uuidMock.map((uuid) => (
-                  <p key={uuid} className="text-xs text-stone-900 w-auto">
+                  <p key={uuid} className="text-xs text-stone-400 w-auto">
                     {uuid}
                   </p>
                 ))}
@@ -233,16 +235,16 @@ export default function FormUpdateRecord({
             </div>
             {fields.map((field, index) => (
               <div key={field.id} className="flex gap-3 items-start rounded-lg">
-                <div className="flex-1 grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-3 text-stone-600">
+                <div className="flex-1 grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-3 text-stone-400">
                   <div>
-                    <label className="block text-sm font-medium text-stone-700 mb-1">
+                    <label className="block text-sm font-medium mb-1">
                       Produto - Código *
                     </label>
                     <input
                       type="text"
                       {...register(`itens.${index}.product_id`)}
                       placeholder="A10200BF3"
-                      className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 border border-(--color-border) rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     {errors.itens?.[index]?.product_id && (
                       <p className="text-red-600 text-sm mt-1">
@@ -250,8 +252,8 @@ export default function FormUpdateRecord({
                       </p>
                     )}
                   </div>
-                  <div className="text-stone-600">
-                    <label className="block text-sm font-medium text-stone-700 mb-1">
+                  <div className="text-stone-400">
+                    <label className="block text-sm font-medium mb-1">
                       Quantidade *
                     </label>
                     <input
@@ -261,7 +263,7 @@ export default function FormUpdateRecord({
                         valueAsNumber: true,
                       })}
                       placeholder="0"
-                      className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 border border-(--color-border) rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     {errors.itens?.[index]?.quantity && (
                       <p className="text-red-600 text-sm mt-1">
