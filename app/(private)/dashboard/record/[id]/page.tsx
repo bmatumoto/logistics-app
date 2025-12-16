@@ -11,9 +11,13 @@ export default async function Page({
 
   return (
     <main className="font-sans">
-      <div className="bg-[#f2f2f2] rounded-lg border border-stone-200 p-6 text-stone-700">
-        <h1 className={`mb-4 text-xl md:text-2xl`}>Informações do registro</h1>
-        <p>Editar informações do registro: {register?.id}</p>
+      <div className="rounded-lg border border-(--color-border) shadow-md p-6 text-stone-700 bg-(--color-accent-foreground)">
+        <h1 className={`mb-4 text-xl md:text-2xl text-(--custom-yellow)`}>
+          Informações do registro
+        </h1>
+        <p className="text-foreground font-light">
+          Editar informações do registro: {register?.id}
+        </p>
       </div>
       {register && <FormUpdateRecord data={register} />}
     </main>

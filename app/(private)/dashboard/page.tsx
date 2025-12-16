@@ -11,17 +11,19 @@ export default async function Page() {
 
   return (
     <main>
-      <div className="bg-[#f2f2f2] rounded-lg border border-stone-200 p-6 text-stone-700">
-        <h1 className={`mb-4 text-xl md:text-2xl`}>Dashboard</h1>
-        <p>
+      <div className="rounded-lg border border-(--color-border) shadow-md p-6 text-stone-700 bg-(--color-accent-foreground)">
+        <h1 className={`mb-4 text-xl md:text-2xl text-(--custom-yellow)`}>
+          Dashboard
+        </h1>
+        <p className="text-foreground font-light">
           Centraliza e documenta todas as movimentações de Inbound e Outbound,
           oferecendo visibilidade total do fluxo logístico, redução de erros
           operacionais e maior confiabilidade nas informações.
         </p>
       </div>
-      <div className="relative rounded-lg border border-stone-900 overflow-x-auto mt-8">
+      <div className="relative rounded-lg border border-(--color-border) shadow-lg overflow-x-auto mt-8">
         <table className="w-full text-sm text-left rtl:text-right text-body">
-          <thead className="text-base text-stone-100 bg-stone-800 rounded-t-lg">
+          <thead className="text-base text-stone-100 bg-sidebar rounded-t-lg">
             <tr>
               <th scope="col" className="px-6 py-3 font-medium rounded-tl-lg">
                 ID
@@ -48,12 +50,12 @@ export default async function Page() {
               ></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="text-stone-400">
             {registers &&
               registers.map((register) => (
                 <tr
                   key={register.id}
-                  className="border-b border-stone-900 last:border-none"
+                  className="border border-(--color-border) last:border-none bg-(--color-accent-foreground)"
                 >
                   <td className="px-6 py-4">{register.id}</td>
                   <td

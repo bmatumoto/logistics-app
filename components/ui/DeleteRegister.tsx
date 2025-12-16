@@ -32,12 +32,12 @@ export function DeleteRegister({ id }: { id: string }) {
         <AlertDialogTrigger asChild>
           <Button
             variant="ghost"
-            className="cursor-pointer transition delay-[1s] duration-300 ease-in-out hover:bg-transparent hover:underline hover:text-inherit"
+            className="p-0 font-normal cursor-pointer transition delay-[1s] duration-300 ease-in-out hover:bg-transparent hover:underline hover:text-inherit"
           >
             Excluir
           </Button>
         </AlertDialogTrigger>
-        <AlertDialogContent className="bg-(--background) text-stone-900">
+        <AlertDialogContent className="bg-(--muted) text-stone-900">
           <AlertDialogHeader>
             <AlertDialogTitle>Tem certeza que deseja excluir?</AlertDialogTitle>
             <AlertDialogDescription className="text-stone-700">
@@ -45,7 +45,7 @@ export function DeleteRegister({ id }: { id: string }) {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="border border-stone-600 cursor-pointer">
+            <AlertDialogCancel className="border border-stone-600 bg-transparent cursor-pointer">
               Cancelar
             </AlertDialogCancel>
             <AlertDialogAction
